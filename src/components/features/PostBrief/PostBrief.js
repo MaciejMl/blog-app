@@ -6,7 +6,7 @@ const PostBrief = (props) => {
   const posts = useSelector((state) => getPostId(state, props.id));
 
   return (
-    <article className='col-md-6 col-lg-4 border border-grey rounded p-3 pt-1 mt-4 mb-2'>
+    <article className='border border-grey rounded p-3 pt-1 mt-4 mb-2'>
       <h2>{props.title}</h2>
       <p>
         <span className='fw-bold'>Author: </span>
