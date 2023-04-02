@@ -15,7 +15,7 @@ const Post = () => {
   else
     return (
       <Row className='justify-content-center'>
-        <article className='col-6 p-3 pt-1 mt-4 mb-2'>
+        <article className='col-md-6 p-3 pt-1 mt-4 mb-2'>
           <Container className='px-0'>
             <Stack direction='horizontal' gap={2} className='align-items-start'>
               <h2 className='mb-5'>{posts.title}</h2>
