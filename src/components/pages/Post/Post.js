@@ -1,7 +1,6 @@
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate, Link } from 'react-router-dom';
 import { getPostId } from '../../../redux/postsRedux';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Container, Stack, Row } from 'react-bootstrap';
 import DeleteModal from '../../features/DeleteModal/DeleteModal';
 import { useState } from 'react';

@@ -1,8 +1,14 @@
+import { Row } from 'react-bootstrap';
+import EditPostForm from '../../features/EditPostForm/EditPostForm';
+
 const PostEdit = () => {
   return (
-    <div>
-      <h1>POST EDIT</h1>
-    </div>
+    <Row className='justify-content-center'>
+      <div className='col-md-6'>
+        <h2>EDIT FORM</h2>
+        <EditPostForm />
+      </div>
+    </Row>
   );
 };
 
