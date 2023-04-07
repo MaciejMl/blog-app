@@ -5,8 +5,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { registerLocale } from 'react-datepicker';
-// import pl from 'date-fns/locale/pl';
+import { useForm } from 'react-hook-form';
 
 const PostForm = ({ action, actionText, ...props }) => {
   const [title, setTitle] = useState(props.title || '');
@@ -16,65 +15,81 @@ const PostForm = ({ action, actionText, ...props }) => {
     props.shortDescription || ''
   );
   const [content, setMainContent] = useState(props.content || '');
-
-  // registerLocale('pl', pl);
+  const {
+    register,
+    handleSubmit: validate,
+    formState: { errors },
+  } = useForm();
+  const [contentError, setContentError] = useState(false);
+  const [dateError, setDateError] = useState(false);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    action({ title, author, publishedDate, shortDescription, content });
+    // e.preventDefault();
+    setContentError(!content);
+    setDateError(!publishedDate);
+    if (content && publishedDate) {
+      action({ title, author, publishedDate, shortDescription, content });
+    }
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={validate(handleSubmit)}>
       <Form.Group className='mb-3 col-6' controlId='exampleForm.ControlInput1'>
         <Form.Label>Title</Form.Label>
         <Form.Control
+          {...register('title', { required: true, minLength: 4 })}
           type='text'
           value={title}
           placeholder='Enter title'
           onChange={(e) => setTitle(e.target.value)}
         />
+        {errors.title && (
+          <small className='d-block form-text text-danger mt-2'>
+            This field is required and must be longer then 3 chars
+          </small>
+        )}
 
         <Form.Label>Author</Form.Label>
         <Form.Control
+          {...register('author', { required: true, minLength: 4 })}
           type='text'
           value={author}
           placeholder='Enter author'
           onChange={(e) => setAuthor(e.target.value)}
         />
+        {errors.author && (
+          <small className='d-block form-text text-danger mt-2'>
+            This field is required and must be longer then 3 chars
+          </small>
+        )}
 
         <Form.Label>Published</Form.Label>
         <DatePicker
           dateFormat='dd/MM/yyyy'
           selected={publishedDate}
           onChange={(date) => setPublishedDate(date)}
-          // locale='pl'
         />
-        {/* <Form.Control
-          type='date'
-          value={publishedDate}
-          onChange={(e) => setPublishedDate(e.target.value)}
-          onBlur={(e) => {
-            const date = new Date(e.target.value);
-            const options = {
-              day: '2-digit',
-              month: '2-digit',
-              year: 'numeric',
-            };
-            const formattedDate = date.toLocaleDateString('en-GB', options);
-            setPublishedDate(formattedDate.replace(/\//g, '-'));
-          }}
-        /> */}
+        {dateError && (
+          <small className='d-block form-text text-danger mt-2'>
+            Date can't be empty
+          </small>
+        )}
       </Form.Group>
       <Form.Group className='mb-3' controlId='exampleForm.ControlTextarea1'>
         <Form.Label>Short description</Form.Label>
         <Form.Control
+          {...register('shortDescription', { required: true, minLength: 20 })}
           as='textarea'
           value={shortDescription}
           rows={3}
           placeholder='Leave a comment here'
           onChange={(e) => setShortDescription(e.target.value)}
         />
+        {errors.shortDescription && (
+          <small className='d-block form-text text-danger mt-2'>
+            This field is required and must have at least 20 chars
+          </small>
+        )}
 
         <Form.Label>Main content</Form.Label>
         <ReactQuill
@@ -83,6 +98,11 @@ const PostForm = ({ action, actionText, ...props }) => {
           placeholder='Leave a comment here'
           onChange={setMainContent}
         />
+        {contentError && (
+          <small className='d-block form-text text-danger mt-2'>
+            Content can't be empty
+          </small>
+        )}
       </Form.Group>
       <Button variant='primary' type='submit'>
         {actionText}
