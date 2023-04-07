@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { getPostId } from '../../../redux/postsRedux';
 import { useSelector } from 'react-redux';
+import { format } from 'date-fns';
 
 const PostBrief = (props) => {
   const posts = useSelector((state) => getPostId(state, props.id));
@@ -14,7 +15,7 @@ const PostBrief = (props) => {
       </p>
       <p>
         <span className='fw-bold'>Published: </span>
-        {props.publishedDate}
+        {format(props.publishedDate, 'dd/MM/yyyy')}
       </p>
       <p>{props.shortDescription}</p>
 

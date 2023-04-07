@@ -5,7 +5,7 @@ const initialState = {
       title: 'Article title',
       shortDescription: 'Short description of the article...',
       content: 'Main content of the article',
-      publishedDate: '02-02-2022',
+      publishedDate: new Date('02-02-2022'),
       author: 'John Doe',
     },
     {
@@ -13,7 +13,7 @@ const initialState = {
       title: 'Article title II',
       shortDescription: 'Short description of the article II...',
       content: 'Main content of the article II',
-      publishedDate: '12-12-2022',
+      publishedDate: new Date('12-12-2022'),
       author: 'Mark Twain',
     },
     {
@@ -21,7 +21,7 @@ const initialState = {
       title: 'Article title III',
       shortDescription: 'Short description of the article III...',
       content: 'Main content of the article III',
-      publishedDate: '16-07-2001',
+      publishedDate: new Date('07-16-2001'),
       author: 'Elly McLane',
     },
     {
@@ -29,7 +29,7 @@ const initialState = {
       title: 'Article title IV',
       shortDescription: 'Short description of the article IV...',
       content: 'Main content of the article IV',
-      publishedDate: '20-09-2010',
+      publishedDate: new Date('09-20-2010'),
       author: 'John Wick',
     },
   ],

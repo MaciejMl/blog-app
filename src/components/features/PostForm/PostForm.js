@@ -1,6 +1,12 @@
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { registerLocale } from 'react-datepicker';
+// import pl from 'date-fns/locale/pl';
 
 const PostForm = ({ action, actionText, ...props }) => {
   const [title, setTitle] = useState(props.title || '');
@@ -10,6 +16,8 @@ const PostForm = ({ action, actionText, ...props }) => {
     props.shortDescription || ''
   );
   const [content, setMainContent] = useState(props.content || '');
+
+  // registerLocale('pl', pl);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,7 +44,13 @@ const PostForm = ({ action, actionText, ...props }) => {
         />
 
         <Form.Label>Published</Form.Label>
-        <Form.Control
+        <DatePicker
+          dateFormat='dd/MM/yyyy'
+          selected={publishedDate}
+          onChange={(date) => setPublishedDate(date)}
+          // locale='pl'
+        />
+        {/* <Form.Control
           type='date'
           value={publishedDate}
           onChange={(e) => setPublishedDate(e.target.value)}
@@ -50,7 +64,7 @@ const PostForm = ({ action, actionText, ...props }) => {
             const formattedDate = date.toLocaleDateString('en-GB', options);
             setPublishedDate(formattedDate.replace(/\//g, '-'));
           }}
-        />
+        /> */}
       </Form.Group>
       <Form.Group className='mb-3' controlId='exampleForm.ControlTextarea1'>
         <Form.Label>Short description</Form.Label>
@@ -63,12 +77,11 @@ const PostForm = ({ action, actionText, ...props }) => {
         />
 
         <Form.Label>Main content</Form.Label>
-        <Form.Control
-          as='textarea'
+        <ReactQuill
+          theme='snow'
           value={content}
-          rows={5}
           placeholder='Leave a comment here'
-          onChange={(e) => setMainContent(e.target.value)}
+          onChange={setMainContent}
         />
       </Form.Group>
       <Button variant='primary' type='submit'>

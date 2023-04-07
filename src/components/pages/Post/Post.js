@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Container, Stack, Row } from 'react-bootstrap';
 import DeleteModal from '../../features/DeleteModal/DeleteModal';
 import { useState } from 'react';
+import { format } from 'date-fns';
 
 const Post = () => {
   const { id } = useParams();
@@ -37,9 +38,9 @@ const Post = () => {
           </p>
           <p>
             <span className='fw-bold'>Published: </span>
-            {posts.publishedDate}
+            {format(posts.publishedDate, 'dd/MM/yyyy')}
           </p>
-          <p>{posts.content}</p>
+          <p dangerouslySetInnerHTML={{ __html: posts.content }} />
         </article>
         <DeleteModal
           show={showDeleteModal}

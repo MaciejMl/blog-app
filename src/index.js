@@ -6,14 +6,17 @@ import store from './redux/store';
 import { BrowserRouter } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
+import { SSRProvider } from '@react-aria/ssr';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <SSRProvider>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </SSRProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
