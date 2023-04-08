@@ -6,15 +6,22 @@ import 'react-quill/dist/quill.snow.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useForm } from 'react-hook-form';
+import {
+  getAllCategories,
+  changeCategoryNameOnId,
+} from '../../../redux/categoryRedux';
+import { useSelector } from 'react-redux';
 
 const PostForm = ({ action, actionText, ...props }) => {
   const [title, setTitle] = useState(props.title || '');
   const [author, setAuthor] = useState(props.author || '');
   const [publishedDate, setPublishedDate] = useState(props.publishedDate || '');
+  const [category, setCategory] = useState(props.categoryName || '');
   const [shortDescription, setShortDescription] = useState(
     props.shortDescription || ''
   );
   const [content, setMainContent] = useState(props.content || '');
+
   const {
     register,
     handleSubmit: validate,
@@ -22,13 +29,24 @@ const PostForm = ({ action, actionText, ...props }) => {
   } = useForm();
   const [contentError, setContentError] = useState(false);
   const [dateError, setDateError] = useState(false);
+  const categoryList = useSelector(getAllCategories());
+  const findCategoryName = useSelector((state) =>
+    changeCategoryNameOnId(state, category)
+  );
 
   const handleSubmit = (e) => {
     // e.preventDefault();
     setContentError(!content);
     setDateError(!publishedDate);
     if (content && publishedDate) {
-      action({ title, author, publishedDate, shortDescription, content });
+      action({
+        title,
+        author,
+        publishedDate,
+        categoryId: findCategoryName.id,
+        shortDescription,
+        content,
+      });
     }
   };
 
@@ -75,7 +93,19 @@ const PostForm = ({ action, actionText, ...props }) => {
           </small>
         )}
       </Form.Group>
+
       <Form.Group className='mb-3' controlId='exampleForm.ControlTextarea1'>
+        <Form.Label>Category</Form.Label>
+        <Form.Select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option>Select category...</option>
+          {categoryList.map((category) => (
+            <option key={category.id}>{category.categoryName}</option>
+          ))}
+        </Form.Select>
+
         <Form.Label>Short description</Form.Label>
         <Form.Control
           {...register('shortDescription', { required: true, minLength: 20 })}

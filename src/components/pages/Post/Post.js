@@ -5,11 +5,15 @@ import { Container, Stack, Row } from 'react-bootstrap';
 import DeleteModal from '../../features/DeleteModal/DeleteModal';
 import { useState } from 'react';
 import { format } from 'date-fns';
+import { getCategoryId } from '../../../redux/categoryRedux';
 
 const Post = () => {
   const { id } = useParams();
   const posts = useSelector((state) => getPostId(state, id));
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const categories = useSelector((state) =>
+    getCategoryId(state, posts.categoryId)
+  );
 
   if (!posts) return <Navigate to='/' />;
   else
@@ -36,9 +40,13 @@ const Post = () => {
             <span className='fw-bold'>Author: </span>
             {posts.author}
           </p>
-          <p>
+          <p className='mb-0'>
             <span className='fw-bold'>Published: </span>
             {format(posts.publishedDate, 'dd/MM/yyyy')}
+          </p>
+          <p>
+            <span className='fw-bold'>Category: </span>
+            {categories.categoryName}
           </p>
           <p dangerouslySetInnerHTML={{ __html: posts.content }} />
         </article>
