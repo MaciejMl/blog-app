@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useForm } from 'react-hook-form';
 import {
   getAllCategories,
-  changeCategoryNameOnId,
+  changeCategoryNameToId,
 } from '../../../redux/categoryRedux';
 import { useSelector } from 'react-redux';
 
@@ -29,16 +29,18 @@ const PostForm = ({ action, actionText, ...props }) => {
   } = useForm();
   const [contentError, setContentError] = useState(false);
   const [dateError, setDateError] = useState(false);
+  const [categoryError, setCategoryError] = useState(false);
   const categoryList = useSelector(getAllCategories());
   const findCategoryName = useSelector((state) =>
-    changeCategoryNameOnId(state, category)
+    changeCategoryNameToId(state, category)
   );
 
   const handleSubmit = (e) => {
     // e.preventDefault();
     setContentError(!content);
     setDateError(!publishedDate);
-    if (content && publishedDate) {
+    setCategoryError(!findCategoryName);
+    if (content && publishedDate && category) {
       action({
         title,
         author,
@@ -105,6 +107,11 @@ const PostForm = ({ action, actionText, ...props }) => {
             <option key={category.id}>{category.categoryName}</option>
           ))}
         </Form.Select>
+        {categoryError && (
+          <small className='d-block form-text text-danger mt-2'>
+            Category can't be empty
+          </small>
+        )}
 
         <Form.Label>Short description</Form.Label>
         <Form.Control

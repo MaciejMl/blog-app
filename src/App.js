@@ -8,6 +8,8 @@ import PostEdit from './components/pages/PostEdit/PostEdit';
 import { Container } from 'react-bootstrap';
 import Header from './components/views/Header/Header';
 import Footer from './components/views/Footer/Footer';
+import Categories from './components/pages/Categories/Categories';
+import CategoryGroup from './components/pages/CategoryGroup/CategoryGroup';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path='/post/:id' element={<Post />} />
         <Route path='/post/add' element={<PostAdd />} />
         <Route path='/post/edit/:id' element={<PostEdit />} />
+        <Route path='/category' element={<Categories />} />
+        <Route path='/category/:name' element={<CategoryGroup />} />
         <Route path='/about' element={<About />} />
         <Route path='/*' element={<NotFound />} />
       </Routes>

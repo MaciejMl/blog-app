@@ -11,7 +11,7 @@ const EditPostForm = () => {
   const { id } = useParams();
   const post = useSelector((state) => getPostId(state, id));
   const category = useSelector((state) =>
-    getCategoryId(state, post.categoryId)
+    getCategoryId(state, post?.categoryId)
   );
   // console.log(category);
 

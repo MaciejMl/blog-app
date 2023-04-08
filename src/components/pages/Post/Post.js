@@ -12,7 +12,7 @@ const Post = () => {
   const posts = useSelector((state) => getPostId(state, id));
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const categories = useSelector((state) =>
-    getCategoryId(state, posts.categoryId)
+    getCategoryId(state, posts?.categoryId)
   );
 
   if (!posts) return <Navigate to='/' />;
@@ -40,7 +40,7 @@ const Post = () => {
             <span className='fw-bold'>Author: </span>
             {posts.author}
           </p>
-          <p className='mb-0'>
+          <p className='mb-0 '>
             <span className='fw-bold'>Published: </span>
             {format(posts.publishedDate, 'dd/MM/yyyy')}
           </p>

@@ -17,6 +17,10 @@ const NavBar = () => {
             Home
           </Nav.Link>
 
+          <Nav.Link as={NavLink} to='/category'>
+            Categories
+          </Nav.Link>
+
           <Nav.Link as={NavLink} to='/about'>
             About
           </Nav.Link>
